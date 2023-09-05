@@ -8,7 +8,6 @@ code-tools: true
 
 ```{r}
 #| output: false
-
 rm(list=ls())
 library(tidyverse)
 library(httr)
