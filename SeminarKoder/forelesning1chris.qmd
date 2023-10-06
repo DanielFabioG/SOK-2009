@@ -1,0 +1,103 @@
+---
+title: "Spørreundersøkelse forelesning Chris"
+author: "Kandidatnummer blabla, Daniel Fabio G"
+format: pdf  
+editor: visual
+echo: true
+---
+
+```{r}
+# Loading R data
+
+load(spore_under.Rdata)
+
+```
+
+## Innledning
+
+Type oppgave jeg har valgt her
+
+sigma^2^ og s^2^ for utvalg når man skriver variansen. s^2^
+
+```{r}
+# Sjekke variansen for sporre undersøkelsen til Heen
+varians <-var(spore_under$Vekt)
+
+# Finner standardavvik
+sqrt(varians)
+
+```
+
+```{r}
+sd <- sd(spore_under$Vekt)
+sd
+```
+
+Videre kode her
+
+```{r}
+varians_2 <- var(spore_under$Kroppshoyde)
+
+# Finner standardavviket
+sdheight<-sqrt(varians_2)
+```
+
+```{r}
+library(mosaic)
+xpbinom(10, size= 60, prob = 0.1)
+```
+
+```{r}
+# Vi sjekker om det er kovarians mellom vekt og høyde
+# Det eneste vi kan tolke over dette tallet er at det er positivt
+cov(spore_under$Vekt, spore_under$Kroppshoyde)
+```
+
+```{r}
+cor(spore_under$Vekt, spore_under$Kroppshoyde)
+```
+
+```{r}
+lm = lm(Vekt ~ Kroppshoyde, data = spore_under)
+summary(lm)
+```
+
+```{r}
+spore_under %>%
+  ggplot(aes(x=Kroppshoyde, y=Vekt))+
+  geom_point()+
+  # se betyr bare konfidensintervall og betyr at det er 0.95%
+  # konfidens om at det reelle tallet ligger mellom de mørke verdien
+  # fra linjen
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+R^2^ eller R-squared utrykker andelen av forklart varians
+
+Det betyr at uavhengige variabel y forklarer "koeffisienten" % av variansen til den avhengige variabelen x.
+
+```{r}
+xpbinom(0, size=3, prob=0.25)
+```
+
+```{r}
+xpbinom(0, size=12, prob=0.25)
+```
+
+```{r}
+xpbinom(22, size=100, prob=0.25)
+```
+
+```{r}
+xpbinom(14, size=100, prob=0.25)
+```
+
+```{r}
+se <- sdheight / sqrt(nrow(spore_under))
+
+se
+```
+
+```{r}
+xpnorm(172, mean = 175, sd = 1.4)
+```

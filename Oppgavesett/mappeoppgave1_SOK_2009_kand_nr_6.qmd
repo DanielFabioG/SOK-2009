@@ -1,0 +1,36 @@
+---
+title: "Mappeoppgave 1 - Økonomi, statistikk og programmering "
+subtitle: "Fakultet for biovitenskap, fiskeri og økonomi."
+date: last-modified
+date-format: "DD-MM-YYYY"
+author: "Kandidatnummer 6, SOK-2009, Høst 2023"
+format: pdf
+echo: true
+toc: true
+toc-title: "Innholdsliste"
+warning: false
+---
+
+## Oppgave 5^\*^
+
+```{=tex}
+Anta at du har to sett med to seksidede terninger. Noen andre kaster terningene og skriver ned summen av prikker fra begge terningene; (T_{12}) og (T_{22}). Du får ikke se terningene men får vite at summen fra sett en er større en fra sett to, dvs. (T_{12} > T_{22}). La oss si at du tar ut to terninger, en fra sett en (t_{11}) og en fra sett to (t_{22}).
+```
+```{=tex}
+\begin{enumerate}
+    \item Er forventningverdien lik for disse to terningene? Forklar svaret ditt.
+    \item Tegn en graf med mulige utfall for \(T_1\) og \(T_2\). Hvilke utfall er mulige og hvilke er ikke mulige gitt \(T_{12} > T_{22}\)? Er det uniform sannsynlighet for utfallene?
+    \item Bruk R og regn ut forventningsverdien til de to terningene.
+\end{enumerate}
+```
+```{=tex}
+\begin{enumerate}
+    \item Formelen for trekning av \(X\) mulige \(r\) ganger med tilbakelegging er \(X^r\). For fire seksidede terninger altså \(X = 6, r = 4\). Sjekk også \url{https://tma4245.math.ntnu.no/hendelser-og-sannsynlighet/uniform-sannsynlighetsmodell/kombinatorikk-ordnet-utvalg-trekning-med-tilbakelegging/} eller \url{https://www.hackmath.net/en/calculator/combinations-and-permutations}.
+    \item Lag \(36 \times 36\) vektorer med et tall for hver terning, det vil si \([(1,1)(1,1)], [(1,1)(1,2)],[(1,1)(1,3)],\ldots, [(6,6)(6,6)]\). Dette er utfallsrommet for to sett med to terninger. Du må muligens bruke en spesial kommando for å få til dette datasettet.
+    \item Fjern alle vektorer der terningsett en er større enn terningsett to, dvs. der \([(1, 1) < (1, 2)]\).
+    \item Du skal nå sitte igjen med litt mindre enn halvparten av de \([36 \times 36 ]\) utfallene. (Disse oppfyller at summen av terningkast på to er større enn en \(T_{12} > T_{22}\).)
+    \item Kalkuler forventningen til den første av terningen. Alle utfall er like sannsynlige, så dette er lett.
+\end{enumerate}
+
+Sjekk kode på: \url{https://stackoverflow.com/questions/45878448/creating-sample-space-in-r}
+```
