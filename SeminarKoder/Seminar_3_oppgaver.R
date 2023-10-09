@@ -74,7 +74,7 @@ t.test(above_avg_edu$Agriculture, below_avg_edu$Agriculture, alternative = "less
 #OPPGAVE 3c: Test følgende hypotese: Provinser med høy Education har lavere
 # Infant.Mortality 
 
-t.test(above_avg_edu$Infant.Mortality, below_avg_edu$Infant.Mortality, alternative = "less")
+cor.test(swiss$Education, swiss$Infant.Mortality)
 
 #OPPGAVE 3d: Formuler en hypotese, og test den
 
