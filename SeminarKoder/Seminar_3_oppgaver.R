@@ -87,7 +87,7 @@ cor.test(swiss$Education, swiss$Infant.Mortality)
 #OPPGAVE 4a: Gjennomfør en enkel lineær regresjon mellom to variabler (du kan 
 # variablene du brukte oppgave 1c hvis du vil)
 
-model <- lm(swiss$Fertility ~ swiss$Infant.Mortality)
+model <- lm(Fertility ~ Infant.Mortality, swiss)
 summary(model)
 
 
@@ -97,4 +97,4 @@ summary(model)
 swiss %>%
   ggplot(aes(x=Fertility, y= Infant.Mortality))+
   geom_point(size = 2, color ="cornflowerblue")+
-  geom_smooth(method =lm, se= FALSE)
+  geom_smooth(method ="lm")
