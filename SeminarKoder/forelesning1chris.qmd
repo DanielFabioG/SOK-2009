@@ -8,9 +8,10 @@ echo: true
 
 ```{r}
 # Loading R data
-
-load(spore_under.Rdata)
-
+rm(list = ls())
+library(tidyverse)
+# Denne fungerer kun om du har datasettet spore_under.Rdata lokalt i mappen din
+load("~/Rstudio_GIT/SOK-2009/SeminarKoder/spore_under.Rdata")
 ```
 
 ## Innledning
@@ -101,3 +102,74 @@ se
 ```{r}
 xpnorm(172, mean = 175, sd = 1.4)
 ```
+
+```{r}
+t.test(spore_under$Kjonn$Kvinne)
+```
+
+Regresjonsanalyse:
+
+Hvis x så forventer vi y\
+
+Avhengig variabel - den vi ønsker å utforske = y
+
+Uavhengig variabel som forklarer den avhengige variabelen
+
+```{r}
+spore_under %>%
+  ggplot(aes(x=Kroppshoyde, y=Vekt))+
+  geom_point()+
+  geom_smooth(method = lm, se = FALSE)
+  #scale_x_continuous(limits = c(0,200))+
+  #scale_y_continuous(limits = c(0,200))
+```
+
+```{r}
+model<-lm(Vekt ~ Kroppshoyde, spore_under)
+summary(model)
+
+# Se på hvilket konfidensnivå er dette signifikant på kodene, når kroppshoyde har *** betyr det at den hadde vært signifikant selv om det er strengere vilkår.
+
+# p-verdien må være under konfidensnivået for å være signifikant ellers
+```
+
+```{r}
+# Gir vekten til personen som har kropphøyde 172
+Verdi = data.frame(Kroppshoyde = 172)
+predict(model, Verdi)
+```
+
+```{r}
+# Viser alle verdiene på punktene til linjene som vi har tegnet, kun linjen
+fit<-fitted(model)
+fit
+```
+
+```{r}
+# Avvik fra forventning til linjen
+residuals(model) 
+```
+
+En lineær regresjon finner vårt beste estimat på hva linjen burde være, men kan ikke finne den "sanne" linjen.
+
+lm bruker OLS og minimerer avstand mellom regresjonslinjen og observasjonene.
+
+R^2^ Forklart varians
+
+Vi ser på mutiple R squared:
+
+som sier at 0.3151 eller 31.51% av den avhengige variabelen kan forklares av den uavhengige variabelen.
+
+Det vil si at 31.51% av vekten kan forklares av kroppshøyden.
+
+Residual standard error: På gjennomsnitt er standardavviket 12.11 kilo i denne sammenhengen.
+
+## Ikke-lineære regresjoner
+
+Kan ofte se dette fra scatterplots
+
+Må gi en logisk forklaring på hvorfor en bruker ikke-lineære variabler. Men du må argumentere hvorfor, og det er ikke alltid like lett å forstå hvorfor.
+
+Korrelasjon og kausalitet:
+
+Viktig: Korrelasjon =/ Kausalitet
