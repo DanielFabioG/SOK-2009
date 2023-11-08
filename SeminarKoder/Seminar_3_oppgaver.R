@@ -11,6 +11,26 @@ sd(swiss$Fertility)
 
 #OPPGAVE 1b: Vis fordelingen av observasjonsverdier til "Fertility" (hint: histogram)
 
+library(readr)
+library(tidyverse)
+data <- read_delim("C:/Users/danie/Downloads/data.csv", delim = ";", escape_double = FALSE, trim_ws = TRUE)
+data %>%
+  filter(Landsdel == 4) %>%
+ggplot(aes(x=Kartlegging))+
+geom_histogram(binwidth=15)
+
+df_data <- data %>%
+  filter(Landsdel ==2)
+
+reg <- lm(formula = Studietid ~Landsdel, data = df_data)
+reg
+df_data %>%
+  ggplot()+
+  geom_qq(aes(sample = rstandard(reg)))+
+  geom_abline(color = "red")
+
+
+
 hist(swiss$Fertility, main="Histogram of Fertility", xlab="Fertility", col="lightblue", border="black", breaks = 20, xlim = c(30,100))
 
 #OPPGAVE 1c: Lag et scatterplot med "Fertility" på x-aksen og en valgfri* variabel

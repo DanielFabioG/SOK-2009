@@ -82,7 +82,7 @@ xpbinom(0, size=3, prob=0.25)
 ```
 
 ```{r}
-xpbinom(0, size=12, prob=0.25)
+xpbinom(0, size=10, prob=0.39)
 ```
 
 ```{r}
