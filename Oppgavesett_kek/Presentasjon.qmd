@@ -1,0 +1,194 @@
+---
+title: "Økonomi, Satistikk og programmering presentasjon"
+subtitle: "Fakultet for biovitenskap, fiskeri og økonomi."
+date: last-modified
+date-format: "DD-MM-YYYY"
+author: "Kandidatnummer 6, SOK-2009, Høst 2023"
+editor: visual
+format: 
+  revealjs:
+    theme: solarized
+    geometry:
+      - top=20mm
+      - left=20mm
+      - right=20mm
+      - heightrounded
+    fontsize: 16pt
+    documentclass: scrartcl
+    papersize: a4
+echo: false
+warning: false
+nocite: |
+  @*
+toc: true
+toc-title: "Innholdsfortegnelse"
+---
+
+```{r}
+#|output: false
+rm(list=ls())
+library(tidyverse)
+library(car)
+```
+
+```{r}
+
+```
+
+# Innlevering 1 (Oppgave 5\*)
+
+## Deloppgave 5.1
+
+Anta at du har to sett med to seksidede terninger. Noen andre kaster terningene og skriver ned summen av prikker fra begge terningene $T^1_2$ og $T^2_2$ . Du får ikke se terningene men får vite at summen fra sett en er større en fra sett to dvs. $T^1_2 > T^2_2$. La oss si at du tar ut to terninger en fra sett en $T^1_1$ og en fra sett to $T^2_2$.
+
+1.  Er forventningverdien lik for disse to terningene? Forklar svaret ditt.
+
+. . .
+
+Ja, forventningsverdien for en terning er alltid $E(T)=\frac{1+2+3+4+5+6}{6}=3.5$ uansett om terningen er valgt fra sett 1 eller 2.
+
+. . .
+
+```{r}
+# Forventningsverdien for en enkelt terning
+ev_en_terning <- sum(1:6) / 6
+ev_en_terning
+```
+
+## Deloppgave 5.2
+
+Tegn en graf med mulige utfall for $T_1$ og $T_2$. Hvilke utfall er mulige og hvilke er ikke mulige gitt $T^1_2>T^2_2$?
+
+. . .
+
+```{r}
+terninger <- expand.grid(1:6, 1:6, 1:6, 1:6) 
+names(terninger) <- c("t1_1", "t1_2", "t2_1", "t2_2")
+glimpse(terninger)
+```
+
+. . .
+
+```{r}
+# Generer alle mulige utfall for to terninger
+utfall <- expand.grid(T1=2:12, T2=2:12)
+
+# Sjekker hvilke punkter som oppfyller betingelsen T2^1 > T2^2
+utfall$condition <- utfall$T1^2 > utfall$T2^2
+
+utfall %>%
+  ggplot(aes(x=T1, y=T2, color=condition)) +
+  geom_point() +
+  geom_abline()+
+  scale_color_manual(values = c("palevioletred", "limegreen"),
+                     labels = c("Ikke mulige utfall", "Mulige utfall")) +
+     labs(title=expression("Mulige utfall for " * T[1] * 
+                             " og " * T[2] * " med betingelsen " 
+                           * T[2]^1 > T[2]^2),
+          x=expression(T[2]^1),
+          y=expression(T[2]^2),
+          color=expression(T[1]^2 > T[2]^2)) +
+     theme_bw() +
+     scale_x_continuous(breaks=2:12) +
+     scale_y_continuous(breaks=2:12)
+```
+
+## Deloppgave 5.3
+
+Bruk R og regn ut forventningsverdien til de to terningene.
+
+. . .
+
+$E(T_1 + T_2) = \frac{1}{6} \sum_{T_1=1}^{6} T_1 + \frac{1}{6} \sum_{T_2=1}^{6} T_2$ eller $E(T_1+ T_2) = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} + \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = 7$
+
+. . .
+
+```{r}
+# Forventningsverdien for en enkelt terning
+ev_en_terning <- sum(1:6) / 6
+
+# Forventningsverdien for to terninger
+ev_to_terninger <- ev_en_terning * 2
+
+# Skrive ut resultatet
+ev_to_terninger
+```
+
+## Deloppgave 5.4
+
+1.Lag 36x36 vektorer med et tall for hver terning, det vil si \[(1,1)(1,1)\], \[(1,1)(1,2)\],\[(1,1)(1,3)\],.........., \[(6,6)(6,6)\].
+
+Dette er utfallsrommet for to sett med to terninger. Du må muligens bruke en spesial komando for å få til dette datasettet.
+
+. . .
+
+Å printe ut utfallsrommet gir oss 1296 vektorer som er utfallsrommet til de to terningsettene:
+
+. . .
+
+```{r}
+terninger$vektor_rep <- apply(terninger, 1, function(x) paste(c(x[1], x[2], x[3], x[4]), collapse = " "))
+
+# Printer ut alle
+terninger$vektor_rep
+```
+
+## Deloppgave 5.5
+
+Fjern alle vektorer der terning sett en er større en terningsett to dvs. der \[(1, 1) \< (1, 2)\].
+
+. . .
+
+Da ender man opp på omlag halvparten av vektorene, måten jeg gjorde dette på var å ta $({T_1^1} + {T_1^2}) > (T_2^1 + T_2^2)$ og lagret det i en TRUE/FALSE statement for å så filtrere TRUE vektorene fra datasettet og printer dem ut:
+
+. . .
+
+```{r}
+# Lager en TRUE or FALSE statement for verdier av terningsett 1 er større enn terningsett 2
+terninger$vektor_rep_2 <- (terninger$t1_1 + terninger$t1_2) > (terninger$t2_1 + terninger$t2_2)
+
+# Filtrere for å beholde kun de radene der vektor_rep_2 er TRUE
+terninger_true <- subset(terninger, vektor_rep_2)
+
+# Skriver ut
+terninger_true$vektor_rep
+```
+
+Og ender opp på 575 vektorer.
+
+. . .
+
+## Deloppgave 5.6
+
+Kalkuler forventningen til den første av terningen. Alle utfall er like sannsynlige så dette er lett.
+
+. . .
+
+Gitt det filtrerte utfallsrommet $S' , der S' = \{ (T_1^1, T_1^2, T_2^1, T_2^2) \in S \mid (T_1^1 + T_1^2) > (T_2^1 + T_2^2) \}$
+
+Blir forventningsverdien til den første terningen gitt ved $E(T_1) = \frac{\sum_{(T_1^1, T_1^2, T_2^1, T_2^2) \in S'} T_1^1}{|S'|}$
+
+. . .
+
+```{r}
+forventningsverdi_t1_1 <- mean(terninger_true$t1_1)
+forventningsverdi_t1_1
+```
+
+# Innlevering 2 (Regresjonsanalyse)
+
+# Begrepforklaringer
+
+# Ekstra
+
+::: columns
+::: {.column width="40%"}
+Left column
+:::
+
+::: {.column width="60%"}
+Right column
+:::
+:::
+
+# Appendiks
