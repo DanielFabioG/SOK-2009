@@ -160,7 +160,7 @@ Og ender opp på 575 vektorer.
 
 . . .
 
-Om man deler de totale vektorene på to i utfallsrommet så kan man se at dette er omtrent 73 mindre vektorer eller utfall i utfallsrommet.
+Om man deler de totale vektorene på to i utfallsrommet så kan man se at dette er omtrent 73 mindre vektorer/utfall i utfallsrommet.
 
 ```{r}
 1296/2
