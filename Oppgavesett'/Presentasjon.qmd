@@ -8,6 +8,7 @@ editor: visual
 format: 
   revealjs:
     theme: solarized
+    chalkboard: true
     geometry:
       - top=20mm
       - left=20mm
@@ -29,6 +30,7 @@ toc-title: "Innholdsfortegnelse"
 rm(list=ls())
 library(tidyverse)
 library(car)
+library(plotly)
 ```
 
 ```{r}
@@ -62,7 +64,7 @@ Tegn en graf med mulige utfall for $T_1$ og $T_2$. Hvilke utfall er mulige og hv
 ```{r}
 terninger <- expand.grid(1:6, 1:6, 1:6, 1:6) 
 names(terninger) <- c("t1_1", "t1_2", "t2_1", "t2_2")
-glimpse(terninger)
+#glimpse(terninger)
 ```
 
 Dette er betinget sannsynlighet
@@ -70,27 +72,37 @@ Dette er betinget sannsynlighet
 . . .
 
 ```{r}
+
 # Generer alle mulige utfall for to terninger
 utfall <- expand.grid(T1=2:12, T2=2:12)
 
 # Sjekker hvilke punkter som oppfyller betingelsen T2^1 > T2^2
 utfall$condition <- utfall$T1^2 > utfall$T2^2
 
-utfall %>%
+plot<-utfall %>%
   ggplot(aes(x=T1, y=T2, color=condition)) +
   geom_point(size=3) +
   geom_abline()+
   scale_color_manual(values = c("palevioletred", "limegreen"),
-                     labels = c("Ikke mulige utfall", "Mulige utfall")) +
-     labs(title=expression("Mulige utfall for " * T[1] * 
-                             " og " * T[2] * " med betingelsen " 
-                           * T[2]^1 > T[2]^2),
-          x=expression(T[2]^1),
-          y=expression(T[2]^2),
-          color=expression(T[2]^1 > T[2]^2)) +
-     theme_bw() +
+                     labels = c("Ikke mulige utfall", "Mulige utfall"))+
+  labs(title="Mulige utfall for sett 1 og 2 med betingelsen at sett 1 > 2",
+       x="T1",
+       y="T2",
+       color="$T_1^2 > T_2^2$")+
+  theme_bw() +
      scale_x_continuous(breaks=2:12) +
      scale_y_continuous(breaks=2:12)
+
+plotly<-ggplotly(plot)
+
+plotly_fix <- plotly %>%
+  layout(
+    xaxis = list(title = '$T_2^1$'),
+    yaxis = list(title = '$T_2^2$')
+  ) %>%
+  layout(autosize = F, width = 800, height = 450)
+
+plotly_fix
 ```
 
 ## Deloppgave 5.3
