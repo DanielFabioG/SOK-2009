@@ -45,17 +45,13 @@ Anta at du har to sett med to seksidede terninger. Noen andre kaster terningene 
 
 . . .
 
-Nei, den er ikke lik siden vi har betinget sannsynlighet.
+Nei, den er ikke lik siden vi har betinget sannsynlighet. (Her skrev jeg opprinnelig ja, og bommet litt på oppgaven opprinnelig)
 
-Ja, forventningsverdien for en terning er alltid $E(T)=\frac{1+2+3+4+5+6}{6}=3.5$ uansett om terningen er valgt fra sett 1 eller 2.
+Forventningsverdien for en terning er alltid $E(T)=\frac{1+2+3+4+5+6}{6}=3.5$ , men når vi får betinget sannsynlighet så endres sannsynligheten seg:
 
 . . .
 
-```{r}
-# Forventningsverdien for en enkelt terning
-ev_en_terning <- sum(1:6) / 6
-ev_en_terning
-```
+$P(A|B) = \frac{P(A \cap B)}{P(B)}$
 
 ## Deloppgave 5.2
 
@@ -84,14 +80,14 @@ utfall %>%
   ggplot(aes(x=T1, y=T2, color=condition)) +
   geom_point(size=3) +
   geom_abline()+
-  scale_color_manual(values = c("limegreen", "palevioletred"),
-                     labels = c("Mulige utfall", "Ikke mulige utfall")) +
+  scale_color_manual(values = c("palevioletred", "limegreen"),
+                     labels = c("Ikke mulige utfall", "Mulige utfall")) +
      labs(title=expression("Mulige utfall for " * T[1] * 
                              " og " * T[2] * " med betingelsen " 
-                           * T[1]^2 > T[2]^2),
-          x=expression(T[2]^2),
-          y=expression(T[1]^2),
-          color=expression(T[1]^2 > T[2]^2)) +
+                           * T[2]^1 > T[2]^2),
+          x=expression(T[2]^1),
+          y=expression(T[2]^2),
+          color=expression(T[2]^1 > T[2]^2)) +
      theme_bw() +
      scale_x_continuous(breaks=2:12) +
      scale_y_continuous(breaks=2:12)
@@ -145,7 +141,7 @@ Fjern alle vektorer der terning sett en er større en terningsett to dvs. der \[
 
 . . .
 
-Da ender man opp på omlag halvparten av vektorene, måten jeg gjorde dette på var å ta $({T_1^1} + {T_1^2}) > (T_2^1 + T_2^2)$ og lagret det i en TRUE/FALSE statement for å så filtrere TRUE vektorene fra datasettet og printer dem ut:
+Da ender man opp på "omtrent" halvparten av vektorene, måten jeg gjorde dette på var å ta $({T_1^1} + {T_1^2}) > (T_2^1 + T_2^2)$ og lagret det i en TRUE/FALSE statement for å så filtrere TRUE vektorene fra datasettet og printer dem ut:
 
 . . .
 
@@ -163,6 +159,16 @@ terninger_true$vektor_rep
 Og ender opp på 575 vektorer.
 
 . . .
+
+Om man deler de totale vektorene på to i utfallsrommet så kan man se at dette er omtrent 73 mindre vektorer eller utfall i utfallsrommet.
+
+```{r}
+1296/2
+```
+
+. . .
+
+Grunnen til dette er som vi har sett på tidligere, bla bla
 
 ## Deloppgave 5.6
 
