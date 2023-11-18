@@ -1,5 +1,5 @@
 ---
-title: "Økonomi, Satistikk og programmering presentasjon"
+title: "Økonomi, Statistikk og programmering presentasjon"
 subtitle: "Fakultet for biovitenskap, fiskeri og økonomi."
 date: last-modified
 date-format: "DD-MM-YYYY"
@@ -298,7 +298,7 @@ model <- lm(educ ~mothereduc, data= mroz)
 #summary(model)
 ```
 
-Kjører en enkel lineær regresjonsanalyse $\hat{Y} = \hat\alpha + \hat\beta x$
+Kjører en enkel lineær regresjonsanalyse $\hat{y} = \hat\alpha + \hat\beta x$, hatten betyr bare at verdiene er estimert.
 
 . . .
 
@@ -362,7 +362,7 @@ Jeg legger til variabelen "Mannens utdanning" for å se om det er en sammenheng 
 
 ## Multippel regresjonsanalyse
 
-Kjører en multippel lineær regresjonsanalyse: $Y_i = \alpha + \beta_1 x_1, _i + \beta_2 x_2, _i + . . . + \beta_{k} x_k, _i + \epsilon_i$
+Kjører en multippel lineær regresjonsanalyse: $y_i = \alpha + \beta_1 x_1, _i + \beta_2 x_2, _i + \epsilon_i$
 
 . . .
 
@@ -407,16 +407,28 @@ mroz %>%
 mroz %>%
   ggplot(aes(fitted(model), sqrt(abs(rstandard(model)))))+
   geom_point()+
-  geom_smooth(method ="loess")
+  geom_smooth(method ="loess")+
+  geom_hline(yintercept = 1, color = "palevioletred")+
+  theme_bw()
 ```
 :::
 
 ::: {.column width="50%"}
 ::: incremental
--   I (Quantile-Quantile) QQ-plottet sammenligner man fordelingen av residualene med en normal fordeling.
--   Her ser vi fordelingen til "error termen" og ser at fordelingen er tilnærmet normalfordelt, for da hadde den fulgt den røde linjen perfekt. Men det vi kan se er at resultatet er ganske "nært" den røde linjen.
+```{r, echo=TRUE}
+    shapiro.test(residuals(model))
+```
+
+-   Sammenligner fordelingen av residualene med en normal fordeling.
+
+-   I shapiro testen kommer det ut en lav p-verdi som sier at det er statistisk signifikant bevis for at dataene ikke følger en normalfordeling
+
+-   Hvis residualene avviker fra den røde linjen tyder det på brudd.
+
 -   Tar også en visuell undersøkelse av homoskedastisitet, med en "loess" local estimated scatterplot smoothing
+
 -   Er den ikke lineær kan man si at det er heteroskedastistisk og antakelsen bryter
+
 -   For å se mer presist om modellen fungerer vil jeg også sjekke ut forholdet til multippel regresjon
 :::
 :::
@@ -442,16 +454,23 @@ mroz %>%
 mroz %>%
   ggplot(aes(fitted(model_2), sqrt(abs(rstandard(model_2)))))+
   geom_point()+
-  geom_smooth(method ="loess")
+  geom_smooth(method ="loess")+
+  geom_hline(yintercept = 1, color = "palevioletred")+
+  theme_bw()
 ```
 :::
 
 ::: {.column width="50%"}
 ::: incremental
--   Her ser vi også at det ikke "bryter" med normalfordelingen
--   Og at forholdene tilnærmet er normalfordelt utenom noen små "outlier" i begge ender av halen til normalfordelingen.
--   Det finnes mye mer å kunne gjøre og teste men det er kun så mye man rekker
--   I denne visuelle undersøkelsen av homoskedastisitet bryter ikke antakelsen, og jeg vil si at
+```{r, echo=TRUE}
+    shapiro.test(residuals(model_2))
+```
+
+-   Her ser vi også at det bryter med normalfordelingen
+-   Her er p-verdien under 0.05 som sier at det ikke er statistisk signifikant bevis for at dataene er normalfordelt.
+-   I figuren kan man se at W i shapiro-testen er ganske presis, den går fra 0-1 og sier hvor normalfordelt residualene er, 0.9951 er et høyt tall og det vises i figur også.
+-   Residualene vi ser på er feilleddet i likningen vi så på for regresjonsanalysen $\epsilon_i$
+-   I denne visuelle undersøkelsen av homoskedastisitet brytes også antakelsen, og jeg vil si at
 :::
 :::
 :::
@@ -461,13 +480,15 @@ mroz %>%
 ##  {auto-animate="true"}
 
 ::: {style="margin-top: 100px;"}
-Nullhypotesen min holder
+Jeg vil si at det er brudd i antakelsen under test for lineæritet men det betyr nødvendigvis ikke at nullhypotesen min er brutt.
 :::
 
 ##  {auto-animate="true"}
 
 ::: {style="margin-top: 200px; font-size: 3em; color: red;"}
-Nullhypotesen min holder
+::: {style="margin-top: 100px;"}
+::: {style="margin-top: 100px;"}
+Jeg vil si at det er brudd i antakelsen under test for lineæritet men det betyr nødvendigvis ikke at nullhypotesen min er brutt.
 :::
-
-# Appendiks
+:::
+:::
