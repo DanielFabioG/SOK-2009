@@ -9,6 +9,7 @@ format:
   revealjs:
     theme: solarized
     chalkboard: true
+    smaller: true
     geometry:
       - top=20mm
       - left=20mm
@@ -208,7 +209,7 @@ Har allerede svart på dette men kan kjapt vise det på tavlen igjen.
 
 # Innlevering 2 (Regresjonsanalyse)
 
-## Hvorfor er regresjonsanalyse så anvendt?
+## Hvorfor regresjonsanalyse?
 
 ::: incremental
 -   **Finne den beste rette linjen som passer til et sett datapunkter**
@@ -362,7 +363,7 @@ Jeg legger til variabelen "Mannens utdanning" for å se om det er en sammenheng 
 
 ## Multippel regresjonsanalyse
 
-Kjører en multippel lineær regresjonsanalyse: $y_i = \alpha + \beta_1 x_1, _i + \beta_2 x_2, _i + \epsilon_i$
+Kjører en multippel lineær regresjonsanalyse: $y_i = \alpha + \beta_1 x_1, _i + \beta_2 x_2, _i ... \beta_k x_k, _i + \epsilon_i$
 
 . . .
 
@@ -470,25 +471,7 @@ mroz %>%
 -   Her er p-verdien under 0.05 som sier at det ikke er statistisk signifikant bevis for at dataene er normalfordelt.
 -   I figuren kan man se at W i shapiro-testen er ganske presis, den går fra 0-1 og sier hvor normalfordelt residualene er, 0.9951 er et høyt tall og det vises i figur også.
 -   Residualene vi ser på er feilleddet i likningen vi så på for regresjonsanalysen $\epsilon_i$
--   I denne visuelle undersøkelsen av homoskedastisitet brytes også antakelsen, og jeg vil si at
-:::
-:::
-:::
-
-. . .
-
-##  {auto-animate="true"}
-
-::: {style="margin-top: 100px;"}
-Jeg vil si at det er brudd i antakelsen under test for lineæritet men det betyr nødvendigvis ikke at nullhypotesen min er brutt.
-:::
-
-##  {auto-animate="true"}
-
-::: {style="margin-top: 200px; font-size: 3em; color: red;"}
-::: {style="margin-top: 100px;"}
-::: {style="margin-top: 100px;"}
-Jeg vil si at det er brudd i antakelsen under test for lineæritet men det betyr nødvendigvis ikke at nullhypotesen min er brutt.
+-   I denne visuelle undersøkelsen av homoskedastisitet brytes også antakelsen.
 :::
 :::
 :::
